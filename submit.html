@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit a Sighting | SightingsHub</title>
+  <link rel="stylesheet" href="style.css" />
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-o9N1j7kBRYx5N7E4E+6Yw12HHAMkX9Sm+3f/tFBqjDE="
+    crossorigin=""
+  />
+  <style>
+    #map {
+      height: 300px;
+      margin-top: 1em;
+      border: 2px solid #333;
+    }
+    form {
+      background-color: rgba(0, 0, 0, 0.6);
+      padding: 1.5em;
+      max-width: 600px;
+      margin: 2em auto;
+      border: 1px solid #555;
+      color: #f0e6d6;
+    }
+    label {
+      display: block;
+      margin-top: 1em;
+    }
+    input[type="text"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 0.5em;
+      background: #222;
+      color: #eee;
+      border: 1px solid #444;
+    }
+    .radio-group {
+      display: flex;
+      gap: 1em;
+      margin-top: 0.5em;
+    }
+    button {
+      margin-top: 1.5em;
+      padding: 0.5em 1.5em;
+      background: #592929;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #7a3a3a;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <header>
+    <h1>Submit a Sighting</h1>
+    <p class="subtitle">Leave a trace of the weird</p>
+    <nav>
+      <a href="index.html">Home</a>
+    </nav>
+  </header>
+
+  <form>
+    <label for="title">Title of Sighting</label>
+    <input type="text" id="title" required />
+
+    <label for="description">Description</label>
+    <textarea id="description" rows="5" required></textarea>
+
+    <label for="category">Category</label>
+    <select id="category" required>
+      <option value="">Select one...</option>
+      <option value="cryptid">Cryptid</option>
+      <option value="ufo">UFO</option>
+      <option value="ghost">Ghost</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label>Is this real or fictional?</label>
+    <div class="radio-group">
+      <label><input type="radio" name="reality" value="real" required /> Real</label>
+      <label><input type="radio" name="reality" value="fictional" /> Fictional</label>
+    </div>
+
+    <label for="date">Date of Sighting</label>
+    <input type="date" id="date" required />
+
+    <label for="manualLocation">Manual Location (optional)</label>
+    <input type="text" id="manualLocation" placeholder="Dark woods, Jasper GA..." />
+
+    <button type="button" onclick="getLocation()">Use My GPS</button>
+    <input type="hidden" id="latitude" />
+    <input type="hidden" id="longitude" />
+
+    <div id="map"></div>
+
+    <label for="image">Optional Image</label>
+    <input type="file" id="image" accept="image/*" />
+
+    <button type="submit">Submit Sighting</button>
+  </form>
+
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-o9N1j7kBRYx5N7E4E+6Yw12HHAMkX9Sm+3f/tFBqjDE="
+    crossorigin=""
+  ></script>
+  <script>
+    let map, marker;
+
+    function getLocation() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+      } else {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    function showPosition(position) {
+      const lat = position.coords.latitude;
+      const lon = position.coords.longitude;
+      document.getElementById("latitude").value = lat;
+      document.getElementById("longitude").value = lon;
+
+      if (!map) {
+        map = L.map("map").setView([lat, lon], 13);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution: "&copy; OpenStreetMap contributors",
+        }).addTo(map);
+      }
+
+      if (marker) {
+        marker.setLatLng([lat, lon]);
+      } else {
+        marker = L.marker([lat, lon]).addTo(map);
+      }
+    }
+  </script>
+</body>
+</html>
