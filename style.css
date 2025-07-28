@@ -1,46 +1,68 @@
 body {
   margin: 0;
-  padding: 0;
-  background: #0d0d0d;
-  color: #f0f0f0;
-  font-family: "Courier New", Courier, monospace;
+  font-family: 'Courier New', monospace;
+  color: #f0e6d6;
+  background: url('background.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  min-height: 100vh;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(20, 10, 5, 0.7);
+  z-index: 0;
 }
 
 header {
-  background: #1e1e1e;
-  padding: 2rem;
   text-align: center;
-  border-bottom: 2px solid #444;
+  padding: 2em;
+  position: relative;
+  z-index: 1;
 }
 
-h1 {
-  font-size: 3rem;
-  color: #ff004c;
+header h1 {
+  font-size: 2.5em;
+  margin-bottom: 0.2em;
+  color: #ffe6b3;
 }
 
-.tagline {
+.subtitle {
   font-style: italic;
-  color: #aaa;
+  margin-bottom: 1em;
 }
 
-main {
-  padding: 2rem;
+nav a {
+  color: #c4b59c;
+  margin: 0 1em;
+  text-decoration: none;
 }
 
-.features ul {
-  list-style: none;
-  padding: 0;
+nav a:hover {
+  text-decoration: underline;
 }
 
-.features li {
-  padding: 0.5rem 0;
-  font-size: 1.2rem;
+.intro {
+  max-width: 600px;
+  margin: 3em auto;
+  padding: 2em;
+  background-color: rgba(0,0,0,0.5);
+  border: 1px solid #4d4d4d;
+  z-index: 1;
+  position: relative;
 }
 
-footer {
-  text-align: center;
-  padding: 1rem;
-  background: #1e1e1e;
-  border-top: 2px solid #444;
-  color: #666;
+.cta-button {
+  display: inline-block;
+  margin-top: 1em;
+  padding: 0.75em 1.5em;
+  background: #592929;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.cta-button:hover {
+  background: #7a3a3a;
 }
