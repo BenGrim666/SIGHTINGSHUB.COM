@@ -13,6 +13,8 @@ body {
   inset: 0;
   background-color: rgba(20, 10, 5, 0.7);
   z-index: 0;
+  pointer-events: none;
+
 }
 
 header {
